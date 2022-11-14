@@ -2,7 +2,10 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from rest_framework.generics import RetrieveAPIView
+
 from .models import Order
+from .serializers import OrderSerializer
 
 
 class OrderListView(ListView):
@@ -28,3 +31,8 @@ class OrderUpdateView(UpdateView):
 class OrderDeleteView(DeleteView):
     model = Order
     success_url = reverse_lazy("orders:order-list")
+
+
+class OrderJSON(RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
