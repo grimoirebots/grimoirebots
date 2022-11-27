@@ -2,7 +2,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 
 from .models import Order
 from .serializers import OrderSerializer
@@ -35,4 +35,9 @@ class OrderDeleteView(DeleteView):
 
 class OrderJSON(RetrieveAPIView):
     queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+
+class EarliestOrderJSON(ListAPIView):
+    queryset = Order.objects.all().order_by('pub_date')
     serializer_class = OrderSerializer
