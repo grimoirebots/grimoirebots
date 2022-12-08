@@ -1,0 +1,29 @@
+<h1>Orders</h1>
+
+{% for order in page_obj %}
+<li><a href="{{ order.get_absolute_url }}">{{ order.data_source_url }}</a></li>
+{% empty %}
+<p>No orders yet.</p>
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+<h1><a href="{% url 'orders:order-create' %}">Create new order</a></h1>
