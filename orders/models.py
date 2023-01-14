@@ -9,8 +9,11 @@ class Order(models.Model):
     data_source_url = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
 
-    def get_absolute_url(self):
-        return reverse('orders:order-detail', kwargs={'pk': self.pk})
+    class Meta:
+        ordering = ['pub_date']
 
     def __str__(self):
         return self.id.__str__()
+
+    def get_absolute_url(self):
+        return reverse('orders:order-detail', kwargs={'pk': self.pk})
