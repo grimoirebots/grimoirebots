@@ -4,9 +4,9 @@ from rest_framework.routers import SimpleRouter
 from . import views
 
 router = SimpleRouter()
-router.register(r'', views.OrderViewSet)
+router.register(r'', views.ReportViewSet)
 
-app_name = 'orders'
+app_name = 'reports'
 urlpatterns = [
     path('', include(router.urls)),
 ]

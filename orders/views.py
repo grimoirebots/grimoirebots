@@ -1,43 +1,23 @@
-from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-
-from rest_framework.generics import RetrieveAPIView, ListAPIView
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from .models import Order
 from .serializers import OrderSerializer
 
 
-class OrderListView(ListView):
-    model = Order
-    paginate_by = 5
-    ordering = ["-pub_date"]
-
-
-class OrderDetailView(DetailView):
-    model = Order
-
-
-class OrderCreateView(CreateView):
-    model = Order
-    fields = ["data_source_url"]
-
-
-class OrderUpdateView(UpdateView):
-    model = Order
-    fields = ["data_source_url"]
-
-
-class OrderDeleteView(DeleteView):
-    model = Order
-    success_url = reverse_lazy("orders:order-list")
-
-
-class OrderJSON(RetrieveAPIView):
+class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+    @action(detail=False)
+    def pending(self, request):
+        queryset = Order.objects.filter(report=None)
 
-class EarliestOrderJSON(ListAPIView):
-    queryset = Order.objects.all().order_by('pub_date')
-    serializer_class = OrderSerializer
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
