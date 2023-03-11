@@ -95,6 +95,16 @@ DATABASES = {
 }
 
 
+# OpenSearch
+
+OPENSEARCH = {
+    'USER': os.getenv('OPENSEARCH_USERNAME', 'admin'),
+    'PASSWORD': os.getenv('OPENSEARCH_PASSWORD', 'admin'),
+    'HOST': os.getenv('OPENSEARCH_HOST', 'localhost'),
+    'PORT': os.getenv('OPENSEARCH_PORT', '9200'),
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
