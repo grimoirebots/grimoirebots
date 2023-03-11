@@ -22,7 +22,7 @@ WORKDIR /code
 
 # Install dependencies
 COPY poetry.lock pyproject.toml /code/
-RUN poetry install
+RUN poetry install --no-root
 
 # Copy Grimoirebots files
 COPY . /code/
