@@ -5,12 +5,6 @@ from collections import OrderedDict
 from .models import Order, Projects, Setup
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ['id', 'title']
-
-
 class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
@@ -94,3 +88,22 @@ class SetupSerializer(serializers.ModelSerializer):
         }
 
         return ret
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    projects = ProjectsSerializer(write_only=True)
+    setup = SetupSerializer(write_only=True)
+
+    class Meta:
+        model = Order
+        fields = ['id', 'title', 'projects', 'setup']
+
+    def create(self, validated_data):
+        projects_data = validated_data.pop('projects')
+        setup_data = validated_data.pop('setup')
+
+        order = Order.objects.create(**validated_data)
+        Projects.objects.create(order=order, **projects_data)
+        Setup.objects.create(order=order, **setup_data)
+
+        return order
