@@ -37,13 +37,3 @@ class OrderViewSet(ModelViewSet):
 
         serializer = SetupSerializer(setup)
         return Response(serializer.data)
-
-
-class ProjectsViewSet(ModelViewSet):
-    queryset = Projects.objects.all()
-    serializer_class = ProjectsSerializer
-
-
-class SetupViewSet(ModelViewSet):
-    queryset = Setup.objects.all()
-    serializer_class = SetupSerializer

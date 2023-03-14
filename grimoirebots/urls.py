@@ -16,7 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from rest_framework.schemas import get_schema_view
+
 urlpatterns = [
+    path('', get_schema_view(
+        title="Grimoirebots",
+        description="Run GrimoireLab in the cloud!",
+        version="0.1.0"
+    ), name='openapi-schema'),
     path('admin/', admin.site.urls),
     path('orders/', include('orders.urls'), name='orders'),
     path('reports/', include('reports.urls'), name='reports'),
