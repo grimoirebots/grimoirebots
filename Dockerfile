@@ -41,6 +41,9 @@ COPY . ./
 COPY --from=builder $CODE_PATH/.venv ./.venv
 ENV PATH=$CODE_PATH/.venv/bin:$PATH
 
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "grimoirebots.wsgi"]
