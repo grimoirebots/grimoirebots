@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim AS base
+FROM python:3.12.7-slim AS base
 
 # Python settings
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -20,7 +20,7 @@ WORKDIR $CODE_PATH
 FROM base AS builder
 
 # Poetry settings
-ENV POETRY_VERSION=1.5.1
+ENV POETRY_VERSION=1.8.4
 ENV POETRY_HOME=/etc/poetry
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 
