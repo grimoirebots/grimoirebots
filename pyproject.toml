@@ -7,7 +7,7 @@ authors = ["Sergio Merino Hernández <merinhunter94@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.11"
-Django = "~4.2"
+Django = "~5.1"
 gunicorn = "~21.2"
 djangorestframework = "~3.14"
 psycopg = "~3.1"
